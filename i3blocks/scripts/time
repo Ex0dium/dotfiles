@@ -1,0 +1,4 @@
+#!/bin/sh
+
+date '+%x (%V) %X'
+date '+%d/%m %R'

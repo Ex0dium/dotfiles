@@ -1,0 +1,137 @@
+#!/bin/bash
+
+if ! systemctl --user is-active mpd &>/dev/null
+then
+	origstatus='off'
+else
+	origstatus="$(mpc status | sed -n '2p' | grep -Eo '^\[.*\]' | tr -d '[]')"
+	[[ -z "$origstatus" ]] && origstatus='stop'
+fi
+
+LONG=25
+SHORT=10
+
+case $BLOCK_BUTTON in
+	1) mpc -q prev ;;
+	2) mpc -q toggle ;;
+	3) mpc -q next ;;
+	4) mpc -q volume +2 ;;
+	5) mpc -q volume -2 ;;
+	#?*) notify-send "Test" "$BLOCK_BUTTON" ;;
+esac
+
+human_time() {
+	local seconds="$1"
+	if [[ "$seconds" -lt 0 ]]
+	then
+		echo "--:--"
+		return
+	fi
+	local minutes=$(( $seconds / 60 ))
+	seconds=$(( $seconds % 60 ))
+	if [[ "$minutes" -ge 90 ]]
+	then
+		printf "%5s\n" "${minutes}m"
+	else
+		printf "%02d:%02d\n" "$minutes" "$seconds"
+	fi
+	return
+}
+
+	
+status="<span foreground=\"#6699CC\">"
+case $origstatus in
+	stop ) status="<span foreground=\"#F2777A\">" ;;
+	paused ) status="<span foreground=\"#FFCC66\">" ;;
+	playing ) status="<span foreground=\"#99CC99\">" ;;
+	off ) status="<span foreground=\"#515151\">" ;;
+esac
+
+if [[ "$origstatus" != "stop" ]] && [[ "$origstatus" != "off" ]]
+then
+	if [[ ! -f /dev/shm/mpd ]]
+	then
+		mpc -f '[[%artist%§]%title%|[%file%]' current > /dev/shm/mpd
+	fi
+
+	song=$(</dev/shm/mpd)
+	
+	if [[ "${#song}" -gt $LONG ]]
+	then
+		scrolling=long
+	elif [[ "${#song}" -gt $SHORT ]]
+	then
+		scrolling=short
+	else
+		scrolling=none
+	fi
+
+	if [[ "$scrolling" != "none" ]]
+	then
+		scroll="$(</dev/shm/mpd-scroll)"
+	
+		if [[ -z "${scroll// /}" ]]
+		then
+			printf "%-${LONG}s" "$(</dev/shm/mpd)" > /dev/shm/mpd-scroll
+			song="$(</dev/shm/mpd-scroll)"
+		else
+			song="$(</dev/shm/mpd-scroll)"
+			printf "%-${LONG}s" "${song:1}" > /dev/shm/mpd-scroll
+		fi
+	fi
+
+	time="$(echo -e 'status\nclose' | nc -U $MPD_HOST | grep time \
+		| cut -d' ' -f2)"
+	
+	time_elapsed=$(human_time "${time%:*}")
+ 	time_total=$(human_time "${time#*:}")
+	time_left=$(human_time "$(( ${time#*:} - ${time%:*} ))")
+
+	longtime="[$time_elapsed $time_left ${time_total/00:00/--:--}]"
+	shorttime="$time_elapsed $time_left"
+
+	case $scrolling in
+		long)
+			longsong="${song}                                     "
+			shortsong="${song}                                    "
+		;;
+		short)
+			longsong="$(</dev/shm/mpd)                            "
+			shortsong="${song}                                    "
+		;;
+		none)
+			longsong="$(</dev/shm/mpd)                            "
+			shortsong="$longsong"
+		;;
+	esac
+
+	longsong="${longsong:0:$LONG}"
+	shortsong="${shortsong:0:$SHORT}"
+	longsong="${longsong//&/&amp;}"
+	shortsong="${shortsong//&/&amp;}"
+
+	if [[ "$longsong" =~ § ]]
+	then
+		longsong="<i>${longsong/§/</i> }"
+	elif [[ "$song" =~ § ]]
+	then
+		longsong="<i>${longsong}</i>"
+	fi
+	if [[ "$shortsong" =~ § ]]
+	then
+		shortsong="<i>${shortsong/§/</i> }"
+	elif [[ "$song" =~ § ]]
+	then
+		shortsong="<i>${shortsong}</i>"
+	fi
+
+	echo "${longsong} $status$longtime</span>"
+	echo "${shortsong} $status$shorttime</span>"
+else
+	[[ -f /dev/shm/mpd ]] && rm /dev/shm/mpd
+	[[ -f /dev/shm/mpd-scroll ]] && rm /dev/shm/mpd-scroll
+	printf "%${LONG}s $status[--:-- --:-- --:--]</span>\n" " "
+	printf "%${SHORT}s $status--:-- --:--</span>\n" " "
+fi
+
+

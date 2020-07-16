@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo -n "updt "
+
+if [[ -f /dev/shm/claws_offline ]]
+then
+	echo "<span foreground=\"#F2777A\">█</span>"
+	exit
+fi
+
+if [[ ! -f /dev/shm/updates ]]
+then
+	echo 0 > /dev/shm/updates
+fi
+
+avail=($(checkupdates | cut -d' ' -f1))
+aur=($(yaourt -Qua | cut -d' ' -f1 | grep 'aur/'))
+total=$((${#avail[@]} + ${#aur[@]}))
+
+if [[ $total -eq 0 ]]
+then
+	echo "<span foreground=\"#99CC99\">█</span>"
+else
+	echo "<span foreground=\"#FFCC66\">█</span>"
+	if [[ $(cat /dev/shm/updates) -ne $total ]] || [[ -n "$BLOCK_BUTTON" ]]
+	then
+		[[ $total -eq 1 ]] && notify-send "1 mise à jour disponible" "$(for item in ${avail[@]} ${aur[@]}; do echo -n $item; done)"
+		[[ $total -gt 1 ]] && notify-send "$total mises à jour disponibles" "$(for item in ${avail[@]} ${aur[@]}; do echo -n "$item, "; done | sed 's/, $//g')"
+	fi
+fi
+
+echo $total > /dev/shm/updates

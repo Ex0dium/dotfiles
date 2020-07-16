@@ -1,0 +1,31 @@
+#!/bin/bash
+
+color=""
+
+if ! nmcli dev | grep " connecté" &>/dev/null
+then
+	color="#515151"
+	if [ ! -f /dev/shm/claws_offline ]
+	then
+		claws-mail --offline
+		touch /dev/shm/claws_offline
+	fi
+elif ping -c 1 93.184.216.34 -W 1 &>/dev/null
+then
+	color="#99CC99"
+	if [ -f /dev/shm/claws_offline ]
+	then
+		claws-mail --online
+		rm /dev/shm/claws_offline
+	fi
+else
+	color="#F2777A"
+	if [ ! -f /dev/shm/claws_offline ]
+	then
+		claws-mail --offline
+		touch /dev/shm/claws_offline
+		color="#FFCC66"
+	fi
+fi
+
+echo "wan <span foreground=\"$color\">█</span>"

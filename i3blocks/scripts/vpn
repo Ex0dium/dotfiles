@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo -n "vpn "
+
+if nmcli dev | grep tun0 | cut -f3 | grep " connecté" &>/dev/null
+then
+	echo "<span foreground=\"#99CC99\">█</span>"
+	[[ ! -f /dev/shm/vpn ]] && echo 1 > /dev/shm/vpn
+else
+	echo "<span foreground=\"#515151\">█</span>"
+	if [[ -f /dev/shm/vpn ]]
+	then
+		notify-send -u critical "VPN" "Déconnecté"
+		rm /dev/shm/vpn
+	fi
+
+fi

@@ -1,0 +1,64 @@
+!URxvt.font: xft:JetBrains Mono Medium:size=11
+!URxvt.boldFont: xft:DejaVu Sans Mono:size=11
+
+URxvt.font: xft:Noto Mono:style=Regular:size=10
+URxvt.boldFont: xft:Noto Mono:style=Bold:size=10
+URxvt.italicFont: xft:Noto Mono:style=Italic:size=10
+URxvt.boldItalicFont: xft:Noto Mono:style=Bold Italic:size=10
+
+URxvt*saveLines: 2048
+URxvt*scrollBar: false
+
+URxvt.perl-ext-common:resize-font,clipboard
+
+! Zoom
+URxvt.keysym.C-Down:resize-font:smaller
+URxvt.keysym.C-Up:resize-font:bigger
+URxvt.keysym.C-0:resize-font:reset
+
+
+! Clipboard management
+
+!clipboard
+URxvt.clipboard.autocopy: true
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+
+
+
+! special
+*.foreground:   #d8dee9
+*.background:   #1d1f21
+*.cursorColor:  #d8dee9
+
+! black
+*.color0:       #2d2d2d
+*.color8:       #444444
+
+! red
+*.color1:       #ed0b0b
+*.color9:       #b55454
+
+! green
+*.color2:       #40a62f
+*.color10:      #78a670
+
+! yellow
+*.color3:       #f2e635
+*.color11:      #faf380
+
+! blue
+*.color4:       #268bd2
+*.color12:      #68a7d4
+
+! magenta
+*.color5:       #b30ad0
+*.color13:      #c583d0
+
+! cyan
+*.color6:       #32d0fc
+*.color14:      #8adaf1
+
+! white
+*.color7:       #555555
+*.color15:      #e0e3e7

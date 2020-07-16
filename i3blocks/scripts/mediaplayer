@@ -1,0 +1,6 @@
+#!/bin/bash
+ARTIST=`playerctl metadata artist`
+TITLE=`playerctl metadata title`
+TEXT="`playerctl metadata artist` : `playerctl metadata title`"
+#TEXT=${TEXT:1}
+echo $TEXT

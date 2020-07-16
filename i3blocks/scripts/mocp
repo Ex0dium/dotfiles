@@ -1,0 +1,73 @@
+#!/bin/bash
+
+
+if pidof mocp &>/dev/null
+then
+	origstatus=$(mocp -Q "%state")
+else
+	origstatus=STOP
+	[[ -n "$BLOCK_BUTTON" ]] && mocp -S
+fi
+
+case $BLOCK_BUTTON in
+	1) [[ "$origstatus" != "STOP" ]] && mocp -r || mocp -p ;;
+	2) mocp -G ;;
+	3) [[ "$origstatus" != "STOP" ]] && mocp -f || mocp -p ;;
+	4) mocp -j $(($(mocp -Q "%cs") - 5))s ;;
+	5) mocp -j $(($(mocp -Q "%cs") + 5))s ;;
+esac
+
+status="<span foreground=\"#6699CC\">█</span>"
+case $origstatus in
+	STOP ) status="<span foreground=\"#F2777A\">█</span>" ;;
+	PAUSE ) status="<span foreground=\"#FFCC66\">█</span>" ;;
+	PLAY ) status="<span foreground=\"#99CC99\">█</span>" ;;
+esac
+
+if [[ "$origstatus" != "STOP" ]]
+then
+	if [[ -f /dev/shm/mocp ]]
+	then
+		song=$(</dev/shm/mocp)
+	else
+		song=$(mocp -Q "%song, %artist")
+		[[ -z "$song" ]] && song=$(basename "$(mocp -Q %file)")
+		[[ -n "$song" ]] && echo "$song" > /dev/shm/mocp
+	fi
+
+	song="${song//&/and}"
+
+	if [ ${#song} -gt 30 ]
+	then
+		dots="…"
+	fi
+	if [ ${#song} -gt 15 ]
+	then
+		shortdots="…"
+	fi
+	
+	time="$(mocp -Q "[%ct %tl %tt]")"
+	shorttime="$(mocp -Q "%ct %tl")"
+	
+	if [[ "$time" = "[  ]" ]] || [[ -z "$time" ]]
+	then
+		time="[--:-- --:-- --:--]"
+	fi
+	
+	if [[ -z "$shorttime" ]] || [[ "$shorttime" = " " ]]
+	then
+		shorttime="--:-- --:--"
+	fi
+	
+	if [[ "${#shorttime}" -eq 6 ]]
+	then
+		shorttime="${shorttime}--:--"
+	fi
+	
+	echo "$status ${song:0:30}$dots ${time/  ]/ --:-- --:--]}"
+	echo "$status ${song:0:15}$shortdots $shorttime"
+else
+	[[ -f /dev/shm/mocp ]] && rm /dev/shm/mocp
+	echo "$status [--:-- --:-- --:--]"
+	echo "$status --:-- --:--"
+fi

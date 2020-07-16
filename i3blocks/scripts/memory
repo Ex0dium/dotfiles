@@ -1,0 +1,82 @@
+#!/bin/sh
+# Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+TYPE="${BLOCK_INSTANCE:-mem}"
+
+echo -n "${TYPE//mem/ram} "
+
+awk -v type=$TYPE '
+/^MemTotal:/ {
+	mem_total=$2
+}
+/^MemFree:/ {
+	mem_free=$2
+}
+/^Buffers:/ {
+	mem_free+=$2
+}
+/^Cached:/ {
+	mem_free+=$2
+}
+/^SwapTotal:/ {
+	swap_total=$2
+}
+/^SwapFree:/ {
+	swap_free=$2
+}
+END {
+	# TODO: color (if less than X%)
+	if (type == "swap")
+		if ((swap_total-swap_free)*100/swap_total > 90)
+			printf("<span foreground=\"#f2777a\">")
+		else if ((swap_total-swap_free)*100/swap_total > 70)
+			printf("<span foreground=\"#f99157\">")
+		else if ((swap_total-swap_free)*100/swap_total > 40)             
+ 			printf("<span foreground=\"#ffcc66\">")
+		else if ((swap_total-swap_free)*100/swap_total > 10)
+			printf("<span foreground=\"#99cc99\">")
+		else
+			printf("<span foreground=\"#66cccc\">")
+	else
+		if ((mem_total-mem_free)*100/mem_total > 90)                     
+                        printf("<span foreground=\"#f2777a\">")                                           
+                else if ((mem_total-mem_free)*100/mem_total > 70)                
+                        printf("<span foreground=\"#f99157\">")                                           
+                else if ((mem_total-mem_free)*100/mem_total > 40)             
+                        printf("<span foreground=\"#ffcc66\">")                                           
+                else if ((mem_total-mem_free)*100/mem_total > 10)                
+                        printf("<span foreground=\"#99cc99\">")                                           
+                else                                                                
+                        printf("<span foreground=\"#66cccc\">")		
+
+	# full text
+	if (type == "swap")
+		#printf("%.1fG\n", swap_free/1024/1024)
+		printf("%2d%</span>\n", (swap_total-swap_free)*100/swap_total)
+	else
+		#printf("%.1f%\n", mem_free/1024/1024)
+		printf("%2d%</span>\n", (mem_total-mem_free)*100/mem_total)
+
+#	# TODO: short text
+#	if (type == "swap")
+#		#printf("%.1fG\n", swap_free/1024/1024)
+#		printf("%2.0f%</span>\n", (swap_total-swap_free)*100/swap_total)
+#	else
+#		#printf("%.1f%\n", mem_free/1024/1024)
+#	    printf("%2.0f%</span>\n", (mem_total-mem_free)*100/mem_total)
+#
+	}
+' /proc/meminfo

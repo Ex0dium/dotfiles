@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Récupération du taux d'IDLE
+idle=$(env LC_ALL=C mpstat 1 1 -o JSON | jq '.sysstat.hosts[0].statistics[0]."cpu-load"[0].idle' | cut -d. -f1)
+
+# Calcul du taux d'utilisation
+used=$((100 - $idle))
+
+# Choix de la couleur
+if [[ $used -ge 90 ]]
+then color="#f2777a"
+elif [[ $used -ge 70 ]]
+then color="#f99157"
+elif [[ $used -ge 50 ]]
+then color="#ffcc66"
+elif [[ $used -ge 10 ]]
+then color="#99cc99"
+else color="#66cccc"
+fi
+
+# Affichage
+printf "cpu<span foreground=\"%s\">%3d%%</span>\n" "$color" "$used"

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [[ "$instance" == mic ]]
+then
+	options=" --default-source"
+fi
+
+mixer="pamixer${options}"
+
+case $button in
+	1) $mixer -d 1;;
+	2) $mixer -t;;
+	3) $mixer -i 1;;
+	4) $mixer -i 5;;
+	5) $mixer -d 5;;
+esac
+
+volume="$($mixer --get-volume)"
+muted="$($mixer --get-mute)"
+
+if $muted
+then
+	color="#F2777A"
+else
+	color="#99CC99"
+fi
+
+printf "%s <span foreground=\"%s\">%2d%%</span>\n" "$BLOCK_INSTANCE" "$color" "$volume"
+

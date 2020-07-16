@@ -1,0 +1,4 @@
+start=454.958838
+fullscreen=yes
+vf=vapoursynth=file=%50%/home/gmilan/.local/share/SVP4/scripts/1b3723f6.py:buffered-frames=4:concurrent-frames=3
+aid=2

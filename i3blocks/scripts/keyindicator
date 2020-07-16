@@ -1,0 +1,14 @@
+#!/bin/bash
+
+[[ -z "$instance" ]] && instance=Caps
+
+status=$(xset q | grep -Po "$instance Lock: +(on|off)" | grep -Po "on|off")
+
+if [[ "$status" = "on" ]]
+then
+	color="#99CC99"
+else
+	color="#515151"
+fi
+
+echo "${instance,*} <span foreground=\"$color\">█</span>"
