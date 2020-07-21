@@ -43,7 +43,7 @@ font2 Droid Sans:size=10
 
 template0 ${top_mem pid \1} ${top_mem name \1}${alignr}${top_mem mem_res \1} ${top_mem mem \1}%
 
-lua_load $HOME/.conky/conky.lua
+lua_load conky.lua
 
 TEXT
 

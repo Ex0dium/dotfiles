@@ -32,7 +32,7 @@ set $mod Mod4
 ## Appearance
 
 # System status
-exec conky --config "$HOME/.conky/conkyrc"
+exec cd .conky && conky --config "$HOME/.conky/conkyrc"
 #exec pamac-tray
 
 
@@ -63,6 +63,7 @@ font xft:Terminus, DejaVu Sans Mono 10
 ## Apps at startup
 exec ulimit 500000 && lollypop
 exec discord
+#exec akregator --hide-mainwindow
 #exec megasync
 #exec steam
 exec dunst
@@ -76,14 +77,14 @@ exec nm-applet
 #exec SVPManager
 #exec volumeicon
 #exec  pamac-tray
-exec  qbittorrent
+exec  qbittorrent --no-splash
 exec  kmix --failsafe
 
 
 ## Scripting
 
 # Sorting downloads
-# éexec  bash "$HOME/scripts/downloads-sorter/downloads.sh"
+# exec  bash "$HOME/scripts/downloads-sorter/downloads.sh"
 
 
 ## Bindings
@@ -94,7 +95,7 @@ floating_modifier $mod
 
 bindsym $mod+Return exec  i3-sensible-terminal
 bindsym $mod+F1 exec firefox
-bindsym $mod+F2 exec nautilus
+bindsym $mod+F2 exec dolphin
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r reload
@@ -126,10 +127,10 @@ bindsym --release Ctrl+Shift+Print exec flameshot gui
 
 # Volume controls
 exec sleep 20 && alsactl init
-# bindsym XF86AudioRaiseVolume exec  export button=4 && ${HOME}/.i3blocks/volume && pkill -RTMIN+10 i3blocks
-# bindsym XF86AudioLowerVolume exec  export button=5 && ${HOME}/.i3blocks/volume && pkill -RTMIN+10 i3blocks
-# bindsym XF86AudioMute exec  export button=2 && ${HOME}/.i3blocks/volume && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioMicMute exec  export button=2 && BLOCK_INSTANCE=Capture ${HOME}/.i3blocks/volume && pkill -RTMIN+10 i3blocks 
+bindsym XF86AudioRaiseVolume exec  export button=4 && ${HOME}/.i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec  export button=5 && ${HOME}/.i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec  export button=2 && ${HOME}/.i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMicMute exec  export button=2 && BLOCK_INSTANCE=Capture ${HOME}/.i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks 
 # && pkill -RTMIN+10 i3blocks
 
 # Media controls
@@ -298,6 +299,7 @@ assign [class="QtCreator"] $ws3
 
 
 assign [class="Claws-mail"] $ws6
+assign [class="Akregator"] $ws6
 assign [class="Thunderbird"] $ws6
 assign [title="FeedReader"] $ws6
 
@@ -311,7 +313,7 @@ assign [class="vlc"] $ws8
 
 
 # Open specific applications in floating mode
-for_window [class="mpv"] floating enable border pixel none
+for_window [class="mpv"] sticky enable
 #for_window [title="alsamixer"] floating enable
 #for_window [class="Calamares"] floating enable
 for_window [class="Clipgrab"] floating enable

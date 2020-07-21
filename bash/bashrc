@@ -286,7 +286,7 @@ alias news='newsbeuter'
 alias meteo='curl -H "Accept-Language: fr" wttr.in/Nantes'
 alias moon='curl -H "Accept-Language: fr" wttr.in/Moon'
 
-. /usr/share/doc/ranger/examples/shell_automatic_cd.sh
+# . /usr/share/doc/ranger/examples/shell_automatic_cd.sh
 
 #eval $(thefuck --alias)
 

@@ -161,12 +161,12 @@ interval=1
 # The first parameter sets the step (and units to display)
 # The second parameter overrides the mixer selection
 # See the script for details.
-#[volume]
-#instance=vol
+[volume]
+instance=vol
 #instance=PCM
-#interval=once
-#signal=10
-#separator=true
+interval=once
+signal=10
+separator=true
 
 
 

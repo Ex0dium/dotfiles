@@ -20,6 +20,9 @@ $cmd $dotfiles/profile .profile
 $cmd $dotfiles/i3 .config/i3
 $cmd $dotfiles/i3blocks .config/i3blocks
 
+# dunst
+$cmd $dotfiles/dunst .config/dunst
+
 # conky configuration
 $cmd $dotfiles/conky .conky
 
