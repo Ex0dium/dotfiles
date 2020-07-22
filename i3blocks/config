@@ -25,7 +25,7 @@
 # Each block command defaults to the script name to avoid boilerplate.
 command=scripts/$name
 separator_block_width=30
-#markup=pango
+markup=pango
 
 #[focused_window]
 #align=left

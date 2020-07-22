@@ -127,10 +127,10 @@ bindsym --release Ctrl+Shift+Print exec flameshot gui
 
 # Volume controls
 exec sleep 20 && alsactl init
-bindsym XF86AudioRaiseVolume exec  export button=4 && ${HOME}/.i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec  export button=5 && ${HOME}/.i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioMute exec  export button=2 && ${HOME}/.i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioMicMute exec  export button=2 && BLOCK_INSTANCE=Capture ${HOME}/.i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks 
+bindsym XF86AudioRaiseVolume exec  export button=4 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec  export button=5 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec  export button=2 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMicMute exec  export button=2 && BLOCK_INSTANCE=Capture ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks 
 # && pkill -RTMIN+10 i3blocks
 
 # Media controls
