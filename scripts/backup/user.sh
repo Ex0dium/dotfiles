@@ -12,7 +12,7 @@ backup_files="$(xdg-user-dir DESKTOP) $(xdg-user-dir DOCUMENTS) $(xdg-user-dir P
 backup_files+=" $HOME/dotfiles $HOME/dev"
 
 # game saves
-backup_files+=' $HOME/.local/share/SuperMeatBoy $HOME/.local/share/Celeste $HOME/.minecraft/saves $HOME/.config/unity3d'
+backup_files+=" $HOME/.local/share/SuperMeatBoy $HOME/.local/share/Celeste $HOME/.minecraft/saves $HOME/.config/unity3d"
 
 
 # Where to backup to.
