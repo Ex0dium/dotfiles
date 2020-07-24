@@ -169,7 +169,11 @@ signal=10
 separator=true
 
 
-
+[volume]
+instance=mic
+interval=once
+signal=11
+separator=true
 
 
 # Date Time

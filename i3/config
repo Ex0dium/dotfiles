@@ -61,7 +61,7 @@ font xft:Terminus, DejaVu Sans Mono 10
 
 
 ## Apps at startup
-exec ulimit 500000 && lollypop
+exec ulimit 700000 && lollypop
 exec discord
 #exec akregator --hide-mainwindow
 #exec megasync
@@ -77,8 +77,8 @@ exec nm-applet
 #exec SVPManager
 #exec volumeicon
 #exec  pamac-tray
-exec  qbittorrent --no-splash
-exec  kmix --failsafe
+exec  qbittorrent 
+#exec  kmix --failsafe
 
 
 ## Scripting
@@ -341,6 +341,7 @@ for_window [class="Yad"] floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+exec echo "~/.config/i3/config" | entr -r -p echo "$(i3-msg reload && notify-send \"Updated i3 configuration\")"
 
 #bindsym $mod+agrave exec  qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 

@@ -109,3 +109,10 @@ let g:NERDTreeDirArrowExpandable = '|'
 let g:NERDTreeDirArrowCollapsible = '~'
 map <C-o> :NERDTreeToggle<CR>
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
+
+" neosnippet
+let g:neosnippet#enable_completed_snippet = 1
+
+
