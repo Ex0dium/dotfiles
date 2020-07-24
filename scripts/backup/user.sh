@@ -8,10 +8,11 @@
 ####################################
 
 # documents, videos etc
-backup_files="$(xdg-user-dir DESKTOP) $(xdg-user-dir DOCUMENTS) $(xdg-user-dir PICTURES) $(xdg-user-dir VIDEOS) $(xdg-user-dir MUSIC)" backup_files+="$HOME/dotfiles $HOME/dev"
+backup_files="$(xdg-user-dir DESKTOP) $(xdg-user-dir DOCUMENTS) $(xdg-user-dir PICTURES) $(xdg-user-dir VIDEOS) $(xdg-user-dir MUSIC)" 
+backup_files+=" $HOME/dotfiles $HOME/dev"
 
 # game saves
-backup_files+="$backup_files $HOME/.local/share/SuperMeatBoy $HOME/.local/share/Celeste $HOME/.minecraft/saves"
+backup_files+=" $backup_files $HOME/.local/share/SuperMeatBoy $HOME/.local/share/Celeste $HOME/.minecraft/saves \"$HOME/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Saves\""
 
 
 # Where to backup to.
