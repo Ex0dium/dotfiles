@@ -19,6 +19,10 @@ $cmd $dotfiles/profile .profile
 # i3 configuration
 $cmd $dotfiles/i3 .config/i3
 $cmd $dotfiles/i3blocks .config/i3blocks
+$cmd $dotfiles/polybar .config/polybar
+mkdir -p .local/share/fonts
+cp -r $dotfiles/polybar/fonts/* .local/share/fonts
+fc-cache -v
 
 # dunst
 $cmd $dotfiles/dunst .config/dunst

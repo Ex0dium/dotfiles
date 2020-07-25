@@ -389,36 +389,38 @@ mode "resize" {
 
 # Lock screen
 bindsym $mod+9 exec i3lock -c 000000
+
+exec_always bash ~/.config/polybar/launch.sh
  
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
+#bar {
 	#position top
-	status_command i3blocks
+#	status_command i3blocks
 
 # please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 	#tray_output primary
 	#tray_output eDP1
 	#output eDP1
 
-	bindsym button4 nop
-	bindsym button5 nop
+#	bindsym button4 nop
+#	bindsym button5 nop
 	# font -xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1
 	# font xft:IBM Plex Mono, DejaVu Sans Mono 11
 	# font xft:xos4 Terminus, DejaVu Sans Mono 14
-	strip_workspace_numbers yes
-	colors {
-           background  $color_plain
-           separator  $color_text_u
-           statusline $color_text_f
+#	strip_workspace_numbers yes
+#	colors {
+#          background  $color_plain
+#          separator  $color_text_u
+#          statusline $color_text_f
            # State             Border       BG           Text
-           focused_workspace   $color_focus $color_focus $color_text_reverse
-           active_workspace    $color_plain $color_plain $color_text_f
-           inactive_workspace  $color_plain $color_plain $color_text_f
-           urgent_workspace    $color_focus $color_focus $color_text_f
-           binding_mode        $color_focus $color_focus $color_text_reverse
-       }
+#           focused_workspace   $color_focus $color_focus $color_text_reverse
+#           active_workspace    $color_plain $color_plain $color_text_f
+#           inactive_workspace  $color_plain $color_plain $color_text_f
+#           urgent_workspace    $color_focus $color_focus $color_text_f
+#           binding_mode        $color_focus $color_focus $color_text_reverse
+#       }
 
-}
+#}
 
 
 # hide/unhide i3status bar
