@@ -77,7 +77,7 @@ exec nm-applet
 #exec SVPManager
 #exec volumeicon
 #exec  pamac-tray
-exec  qbittorrent 
+#exec  qbittorrent 
 #exec  kmix --failsafe
 
 
@@ -85,7 +85,7 @@ exec  qbittorrent
 
 # Sorting downloads
 # exec  bash "$HOME/scripts/downloads-sorter/downloads.sh"
-
+exec echo "$HOME/.config/polybar/config" | entr sh .config/polybar/launch.sh
 
 ## Bindings
 
@@ -345,12 +345,14 @@ exec echo "~/.config/i3/config" | entr -r -p echo "$(i3-msg reload && notify-sen
 
 #bindsym $mod+agrave exec  qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 
-# Set shut down, restart and locking features
-bindsym $mod+agrave mode "$mode_system"
+bindsym $mod+agrave exec sh $HOME/dotfiles/scripts/powermenu/powermenu.sh
+
+# Set shut down, restart and locking features - currently disabled
+# bindsym $mod+agrave mode "$mode_system"
 set $mode_system (l)ock | (e)xit | (s)uspend | (h)ibernate | (r)eboot | (S)hutdown 
 mode "$mode_system" {
     #bindsym l exec  xscreensaver-command -lock, mode "default"
-    bindsym l exec  i3lock -c 000000 -i /home/gmilan/Images/Backgrounds/42613.png
+    bindsym l exec  i3lock -c 000000 -i /home/gmilan/Images/Backgrounds/42613.png, mode "default"
     #bindsym l exec  i3lock-wrapper -e, mode "default"
     bindsym s exec  systemctl suspend, mode "default"
     bindsym e exec  i3-msg exit, mode "default"
@@ -388,9 +390,8 @@ mode "resize" {
 }
 
 # Lock screen
-bindsym $mod+9 exec i3lock -c 000000
+# bindsym $mod+9 exec i3lock -c 000000
 
-exec_always bash ~/.config/polybar/launch.sh
  
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 #bar {

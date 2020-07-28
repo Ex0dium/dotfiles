@@ -22,8 +22,9 @@ alias np='vim -w PKGBUILD'
 
 # fix "xdg-open fork-bomb" export your preferred browser from here
 
-alias conf='vim $HOME/.i3/config'
+alias conf='vim $HOME/.config/i3/config'
 #alias comp='vim $HOME/.config/compton.conf'
+alias dotfiles='cd $HOME/dotfiles'
 alias mk='vim makefile'
 
 alias fixit='sudo rm -f /var/lib/pacman/db.lck'
@@ -49,7 +50,7 @@ alias meteo='curl -H "Accept-Language: fr" wttr.in/Châlons-En-Champagne'
 alias moon='curl -H "Accept-Language: fr" wttr.in/Moon'
 
 alias backup-user='bash $HOME/dotfiles/scripts/backup/user.sh'
-
+alias twitch='bash $HOME/dotfiles/scripts/twitch/stream.sh'
 #
 # # ex - archive extractor
 # # usage: ex <file>
