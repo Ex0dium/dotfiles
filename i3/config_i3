@@ -85,23 +85,7 @@ exec nm-applet
 
 # Sorting downloads
 # exec  bash "$HOME/scripts/downloads-sorter/downloads.sh"
-
-# Launch polybar
-#exec echo "$HOME/.config/polybar/config" | entr sh .config/polybar/launch.sh
-
-# Launch kde & stuff
-for_window [class="plasmashell"] floating enable;
-for_window [class="Plasma"] floating enable; border none
-for_window [title="plasma-desktop"] floating enable; border none
-for_window [title="win7"] floating enable; border none
-for_window [class="krunner"] floating enable; sticky enable; border none
-for_window [class="Kmix"] floating enable; border none
-for_window [class="Klipper"] floating enable; border none
-for_window [class="Plasmoidviewer"] floating enable; border none
-for_window [class="(?i)*nextcloud*"] floating disable
-for_window [class="plasmashell" window_type="notification"] floating enable, border none, move right 700px, move down 450px
-no_focus [class="plasmashell" window_type="notification"] 
-
+exec echo "$HOME/.config/polybar/config" | entr sh .config/polybar/launch.sh
 
 ## Bindings
 
@@ -125,11 +109,10 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec  dmenu_recent -f -fn 'xos4 Terminus'
 
 # start dmenu (a program launcher)
-bindsym $mod+Shift+d exec --no-startup-id rofi -show run
+bindsym $mod+Shift+d exec rofi -show run
 # repplacement for i3-dmenu-desktop
-#bindsym $mod+d exec  rofi -show drun -icon-theme "Arc" -show-icons
-#bindsym $mod+d exec qdbus org.kde.kglobalaccel /component/krunner invokeShortcut 'run command'
-bindsym $mod+d exec --no-startup-id krunner
+bindsym $mod+d exec  rofi -show drun -icon-theme "Arc" -show-icons
+
 
 ## Print bindings
 # bindsym --release Print exec  scrot ~/Images/Screenshots/%Y-%m-%d-%T-screenshot.png
@@ -144,22 +127,22 @@ bindsym --release Ctrl+Shift+Print exec flameshot gui
 
 # Volume controls
 exec sleep 20 && alsactl init
-bindsym XF86AudioRaiseVolume exec --no-startup-id export button=4 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id export button=5 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioMute exec --no-startup-id export button=2 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
-bindsym XF86AudioMicMute exec --no-startup-id export button=2 && BLOCK_INSTANCE=Capture ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks 
+bindsym XF86AudioRaiseVolume exec  export button=4 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec  export button=5 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec  export button=2 && ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMicMute exec  export button=2 && BLOCK_INSTANCE=Capture ${HOME}/.config/i3blocks/scripts/volume && pkill -RTMIN+10 i3blocks 
 # && pkill -RTMIN+10 i3blocks
 
 # Media controls
-bindsym XF86AudioNext exec --no-startup-id playerctl next
-bindsym XF86AudioPrev exec --no-startup-id playerctl previous
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
-bindsym XF86AudioStop exec --no-startup-id playerctl stop
+bindsym XF86AudioNext exec  playerctl next
+bindsym XF86AudioPrev exec  playerctl previous
+bindsym XF86AudioPlay exec  playerctl play-pause
+bindsym XF86AudioStop exec  playerctl stop
 #bindsym XF86AudioRaiseVolume exec  mpc volume +2
 #bindsym XF86AudioLowerVolume exec  mpc volume -2
 
 #windows key
-bindcode --release 133 exec --no-startup-id qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.activateLauncherMenu
+bindcode --release 133 exec  qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.activateLauncherMenu
 
 
 # LEDs controls (Num lock && caps lock
@@ -238,14 +221,14 @@ bindsym $mod+Ctrl+Left workspace prev
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
-set $ws1 1
-set $ws2 2
-set $ws3 3
-set $ws4 4
-set $ws5 5
-set $ws6 6
-set $ws7 7
-set $ws8 8
+set $ws1 1:🌎①
+set $ws2 2:🖿②
+set $ws3 3:🗗③
+set $ws4 4:🗗④
+set $ws5 5:🗗⑤
+set $ws6 6:🖂⑥
+set $ws7 7:🗩⑦
+set $ws8 8:🎜⑧
 
 default_orientation vertical
 
@@ -282,7 +265,21 @@ bindsym $mod+Shift+underscore move container to workspace $ws8; workspace $ws8
 
 force_display_urgency_hint 2000 ms
 
- 
+
+for_window [title="Bureau — Plasma"] kill; floating enable;
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable;
+for_window [title="plasma-desktop"] floating enable;
+for_window [title="win7"] floating enable;
+for_window [class="krunner"] floating enable; 
+for_window [class="Kmix"] floating enable;
+for_window [class="Klipper"] floating enable;
+for_window [class="Plasmoidviewer"] floating enable;
+for_window [class="(?i)*nextcloud*"] floating disable
+# for_window [class="plasmashell" window_type="notification"] floating enable
+#for_window [class="plasmashell" window_type="notification"] border none, move left 0px, move down 400px
+for_window [class="plasmashell" window_type="notification"] move position 20 20;
+no_focus [class="plasmashell" window_type="notification"] 
 no_focus [class="dunst"] 
 
 ########################
@@ -346,9 +343,9 @@ for_window [class="Yad"] floating enable
 bindsym $mod+Shift+c reload
 exec echo "~/.config/i3/config" | entr -r -p echo "$(i3-msg reload && notify-send \"Updated i3 configuration\")"
 
-bindsym $mod+agrave exec  qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
+#bindsym $mod+agrave exec  qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 
-#bindsym $mod+agrave exec sh $HOME/dotfiles/scripts/powermenu/powermenu.sh
+bindsym $mod+agrave exec sh $HOME/dotfiles/scripts/powermenu/powermenu.sh
 
 # Set shut down, restart and locking features - currently disabled
 # bindsym $mod+agrave mode "$mode_system"

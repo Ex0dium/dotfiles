@@ -41,7 +41,7 @@ alias mirrors='sudo pacman-mirrors -g'
 alias printer='system-config-printer'
 
 alias mv='amv -gi'
-alias cp='acp -gir'
+#alias cp='acp -gir'
 alias n='vim'
 
 alias news='newsbeuter'
